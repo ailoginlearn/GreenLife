@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile with role details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique user identifier" },
+        "email": { "type": "string", "format": "email", "description": "User's email address" },
+        "displayName": { "type": "string", "description": "User's displayed full name" },
+        "role": { "type": "string", "enum": ["patient", "admin", "doctor"], "description": "Access level role" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account registration timestamp" }
+      },
+      "required": ["id", "email", "displayName", "role", "createdAt"]
+    },
+    "doctor": {
+      "title": "Doctor",
+      "description": "A medical practitioner at the hospital",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique doctor identifier" },
+        "name": { "type": "string", "description": "Full name of the doctor" },
+        "department": { "type": "string", "description": "Hospital medical department" },
+        "specialty": { "type": "string", "description": "Specific clinical training focus" },
+        "imageUrl": { "type": "string", "description": "Profile picture URL" },
+        "experience": { "type": "string", "description": "Years of professional practice description" }
+      },
+      "required": ["id", "name", "department", "specialty", "imageUrl", "experience"]
+    },
+    "appointment": {
+      "title": "Appointment",
+      "description": "An appointment booked by a patient with a doctor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique reservation identifier" },
+        "userId": { "type": "string", "description": "Patient user identifier" },
+        "doctorId": { "type": "string", "description": "Practitioner identifier" },
+        "doctorName": { "type": "string", "description": "Name of booked physician" },
+        "department": { "type": "string", "description": "Hospital medical department" },
+        "date": { "type": "string", "description": "Appointment date" },
+        "timeSlot": { "type": "string", "description": "Standard reservation time range" },
+        "status": { "type": "string", "enum": ["pending", "completed", "cancelled"], "description": "Current authorization status" },
+        "notes": { "type": "string", "description": "Complaints or session directives" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Initial scheduling timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last modified timestamp" }
+      },
+      "required": ["id", "userId", "doctorId", "doctorName", "department", "date", "timeSlot", "status", "createdAt", "updatedAt"]
+    },
+    "report": {
+      "title": "Report",
+      "description": "Medical summary, laboratory outcome, or scan attached by a patient",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique database document identifier" },
+        "userId": { "type": "string", "description": "Patient user identifier" },
+        "title": { "type": "string", "description": "User label describing document" },
+        "fileUrl": { "type": "string", "description": "Direct file location URL" },
+        "fileName": { "type": "string", "description": "Uploaded asset name" },
+        "uploadDate": { "type": "string", "format": "date-time", "description": "Timestamp upload index" },
+        "fileSize": { "type": "string", "description": "Document byte footprint summary" }
+      },
+      "required": ["id", "userId", "title", "fileUrl", "fileName", "uploadDate", "fileSize"]
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Medical articles and healthy tips written by practitioners or admins",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique blog identifier" },
+        "title": { "type": "string", "description": "Title of the blog post" },
+        "excerpt": { "type": "string", "description": "Short summary of the article" },
+        "content": { "type": "string", "description": "Full text contents of the article" },
+        "authorName": { "type": "string", "description": "Name of the author practitioner or admin" },
+        "authorId": { "type": "string", "description": "Account identifier of the author" },
+        "category": { "type": "string", "description": "Article category (e.g. Cardiology, Pediatrics)" },
+        "imageUrl": { "type": "string", "description": "Banner photo URL" },
+        "publishedDate": { "type": "string", "format": "date-time", "description": "Initial publish timestamp" },
+        "readTime": { "type": "string", "description": "Estimated time to read" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last modified timestamp" }
+      },
+      "required": ["id", "title", "excerpt", "content", "authorName", "authorId", "category", "imageUrl", "publishedDate", "readTime", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/user" },
+      "description": "Information and roles of patients and admins"
+    },
+    "doctors/{doctorId}": {
+      "schema": { "$ref": "#/entities/doctor" },
+      "description": "Directory of working medical practitioners"
+    },
+    "appointments/{appointmentId}": {
+      "schema": { "$ref": "#/entities/appointment" },
+      "description": "Scheduled appointments directory"
+    },
+    "reports/{reportId}": {
+      "schema": { "$ref": "#/entities/report" },
+      "description": "Patient medical record reports archive"
+    },
+    "blogs/{blogId}": {
+      "schema": { "$ref": "#/entities/blog" },
+      "description": "A collection of blog articles and healthy tips"
+    }
+  }
+}

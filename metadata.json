@@ -1,0 +1,6 @@
+{
+  "name": "Hospital Web Portal",
+  "description": "A modern, highly secure hospital management web portal featuring doctor scheduling, virtual appointment booking, clinical department reviews, and comprehensive medical report uploads with integrated patient and admin dashboard services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
